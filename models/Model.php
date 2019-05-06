@@ -1,6 +1,6 @@
 <?php
 
-	class Model(){
+	abstract class Model{
 
 		private static $db_name = 'foro';
 		private static $db_pass = '';
@@ -19,7 +19,7 @@
 		protected function db_open(){
 			$this->conn = new mysqli(
 				self::$db_host,
-				self::$db_user,
+				self::$db_user_name,
 				self::$db_pass,
 				self::$db_name
 			);
@@ -34,6 +34,19 @@
 			$this->db_open();
 			$this->conn->query($this->query);
 			$this->db_close();
+		}
+
+
+		protected function get_simple_query(){
+			$this->db_open();
+
+			$result = $this->conn->query($this->query);
+			$aux = $result->fetch_assoc();
+			$result->close();
+
+			$this->db_close();
+
+			return array_pop($aux);
 		}
 
 		protected function get_query(){

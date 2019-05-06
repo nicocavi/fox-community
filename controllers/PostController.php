@@ -11,6 +11,10 @@
 			return $this->model->get($post_id);
 		}
 
+		public function postCount(){
+			return $this->model->postCount();
+		}
+
 		public function search($url = ''){
 			return $this->model->search($url);
 		}

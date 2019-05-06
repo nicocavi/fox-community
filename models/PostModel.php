@@ -1,30 +1,12 @@
 <?php
 	class PostModel extends Model{
 
-		public function get($post_id = ''){
-
-			$this->query = ($post_id != '')
-			?"SELECT * FROM post WHERE id_post = $post_id"
-			:"SELECT * FROM post";
-
-			$this->get_query();
-
-			$num_rows = count($this->rows);
-
-			$data = array();
-
-			foreach ($this->rows as $key => $value) {
-				array_push($data, $value);
-			}
-			
-			return $data;
-		}
-
-		public function search($url = ''){
+		public function get($url = ''){
 
 			$this->query = ($url != '')
 			?"SELECT * FROM post WHERE url = '$url'"
-			:"SELECT * FROM post";
+			:"SELECT * FROM post ORDER BY fecha 
+";
 
 			$this->get_query();
 
@@ -45,17 +27,33 @@
 		}
 
 		public function set($post_data = array()){
+
 			foreach ($post_data as $key => $value) {
 				$$key = $value;
 			}
-			$this->query = "REPLACE INTO post (titulo, user, fecha, cuerpo, url) VALUES ('$titulo','$user','NOW()','$cuerpo', '$this->setUrl($titulo)')";
+
+			$url = $this->setUrl($titulo);
+			$this->query = "REPLACE INTO post (url, titulo, cuerpo, fecha, user) VALUES ('$url', '$titulo', '$cuerpo', NOW(), '$user')";
 			$this->set_query();
 		}
 
 		private function setUrl($titulo = ''){
-			$url = preg_split("/\s/", $titulo);
+			$url = preg_split("/[\s]/", $titulo);
+			$string ='';
+			for ($i=0; $i < count($url) ; $i++) { 
+				if($i == count($url)-1){
+					$string.= $url[$i];	
+				}else{
+					$string.= $url[$i].'-';
+				}
+			}
+			return $string;
+		}
 
-			return $url;
+		public function postCount(){
+			$this->query = "SELECT COUNT(url) FROM post";
+
+			return $this->get_simple_query();
 		}
 	}
 
