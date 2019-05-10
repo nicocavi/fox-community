@@ -5,9 +5,23 @@
 
 			$this->query = ($url != '')
 			?"SELECT * FROM post WHERE url = '$url'"
-			:"SELECT * FROM post ORDER BY fecha 
-";
+			:"SELECT * FROM post ORDER BY fecha";
 
+			$this->get_query();
+
+			$num_rows = count($this->rows);
+
+			$data = array();
+
+			foreach ($this->rows as $key => $value) {
+				array_push($data, $value);
+			}
+			
+			return $data;
+		}
+
+		public function getUrl($titulo = ''){
+			$this->query = "SELECT * FROM post WHERE titulo = '$titulo'";			
 			$this->get_query();
 
 			$num_rows = count($this->rows);
@@ -37,7 +51,7 @@
 			$this->set_query();
 		}
 
-		private function setUrl($titulo = ''){
+		public function setUrl($titulo = ''){
 			$url = preg_split("/[\s]/", $titulo);
 			$string ='';
 			for ($i=0; $i < count($url) ; $i++) { 

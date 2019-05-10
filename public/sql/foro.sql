@@ -13,6 +13,7 @@ CREATE TABLE users(
 	estado BOOLEAN NOT NULL,
 	rango VARCHAR(20) NOT NULL,
 	apellido VARCHAR(24) NOT NULL,
+	fecha DATETIME NOT NULL,
 	img_perfil LONGBLOB,
 	img_portada LONGBLOB
 );

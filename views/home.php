@@ -5,8 +5,10 @@ $userController = new UserController();
 $comentController = new ComentController();
 
 $post = $postController->get();
+$users = $userController->userDestacados();
 
 $arregloPost = '';
+$userDesta = '';
 
 for ($n=count($post)-1; $n >= 0; $n--) { 
 	$arregloPost .= '
@@ -27,6 +29,11 @@ for ($n=count($post)-1; $n >= 0; $n--) {
 		</article>
 	</div>
 	';
+}
+
+for ($n=0; $n < count($users); $n++) { 
+	$userDesta .= '
+	<li><a href="user/'.$users[$n]['name_user'].'">'.$users[$n]['name_user'].'</a></li>';
 }
 
 printf('
@@ -58,15 +65,7 @@ printf('
 						<h4>Ultimos usuarios</h4>
 					</header>
 					<ul>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
-						<li><a href="">Cavi</a></li>
+						'.$userDesta.'
 					</ul>
 				</section>
 				<section class="solo-list">

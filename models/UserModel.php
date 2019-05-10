@@ -25,6 +25,12 @@
 			return $this->get_simple_query();
 		}
 
+		public function num_post($name_user = ''){
+			$this->query = "SELECT COUNT(titulo) FROM post WHERE user = '$name_user'";
+
+			return $this->get_simple_query();
+		}
+
 		public function validate_user($user, $pass) {
 			$this->query = "SELECT * FROM users WHERE name_user = '$user' AND pass = MD5('$pass')";
 			$this->get_query();
@@ -35,10 +41,14 @@
 			return $data;
 		}
 
-		public function num_post($name_user = ''){
-			$this->query = "SELECT COUNT(titulo) FROM post WHERE user = '$name_user'";
-
-			return $this->get_simple_query();
+		public function userDestacados(){
+			$this->query = "SELECT * FROM users ORDER BY fecha DESC LIMIT 10 ";
+			$this->get_query();
+			$data = array();
+			foreach ($this->rows as $key => $value) {
+				array_push($data, $value);
+			}
+			return $data;
 		}
 
 		public function userCount(){
@@ -76,7 +86,7 @@
 				$$key = $value;
 			}
 			
-			$this->query = "INSERT INTO users VALUES ('$name_user', MD5('$pass'), '$email', '$nombre', '$puntos', '$estado','$rango', '$apellido', '$img_perfil', '$img_portada')";
+			$this->query = "INSERT INTO users VALUES ('$name_user', MD5('$pass'), '$email', '$nombre', '$puntos', '$estado','$rango', '$apellido', NOW(), '$img_perfil', '$img_portada')";
 			$this->set_query();
 		}
 

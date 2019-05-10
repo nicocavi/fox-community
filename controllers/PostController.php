@@ -15,6 +15,10 @@
 			return $this->model->postCount();
 		}
 
+		public function setUrl(){
+			return $this->model->setUrl();
+		}
+
 		public function search($url = ''){
 			return $this->model->search($url);
 		}

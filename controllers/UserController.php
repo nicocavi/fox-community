@@ -7,6 +7,10 @@
 			$this->model = new UserModel();
 		}
 		
+		public function userDestacados(){
+			return $this->model->userDestacados();
+		}
+
 		public function get($name_user = ''){
 			return $this->model->get($name_user);
 		}

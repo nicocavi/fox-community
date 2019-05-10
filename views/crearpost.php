@@ -8,19 +8,12 @@ if($_SESSION['ok'] == true){
 				'cuerpo' => $_POST['cuerpo'], 
 				'user' => $_SESSION['user'] 
 			);
+
 			$postController->set($post);
 
-			header ( 'Location: '.$_POST['titulo'].'');
-
-
-			printf('
-					<script type="text/javascript">
-						window.onload = function () {
-							reloadPage("/")
-						}
-						alert("Nuevo post creado, felicitaciones!")
-					</script>
-				');
+			$titulo = $postController->setUrl($_POST['titulo']);
+			header ( "Location: $titulo");
+			printf($titulo);
 		}
 	}
 	printf('
